@@ -1,14 +1,13 @@
 package fr.istic.miage.tpnosql.domain;
 
-import org.bson.types.ObjectId;
-
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
+import com.mongodb.ObjectId;
 
-@Entity("addresses")
+@Entity("address")
 public class Address {
 	
-	@Id private ObjectId id;
+	@Id ObjectId id;
 	private String street;
 	private String country;
 	private String city;
@@ -38,12 +37,7 @@ public class Address {
 	public void setPostCode(String postCode) {
 		this.postCode = postCode;
 	}
-	public ObjectId getId() {
-		return id;
-	}
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+	
 	
 	
 

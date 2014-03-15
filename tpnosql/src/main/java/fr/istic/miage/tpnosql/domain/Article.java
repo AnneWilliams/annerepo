@@ -3,19 +3,18 @@ package fr.istic.miage.tpnosql.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.types.ObjectId;
-
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
+import com.mongodb.ObjectId;
 
-
+@Entity("articles")
 public class Article {
 
-	
+	@Id ObjectId id;
 	private String name;
 	private int stars;
-	private List<Person> personne = new ArrayList<Person>();
+	@Reference private List<Person> personne = new ArrayList<Person>();
 	
 	
 
@@ -39,8 +38,8 @@ public class Article {
 		return personne;
 	}
 
-	public void setPersonne(List<Person> personne) {
-		this.personne = personne;
+	public void addPersonne(Person pers) {
+		this.personne.add(pers);
 	}
 	
 	
