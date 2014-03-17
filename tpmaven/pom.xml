@@ -65,9 +65,9 @@
  
   
 <scm>
-<connection>scm:svn:svn://IPSERVEUR/repository1/monappli-web</connection>
- <url>http://IPSERVEUR/svn/monappli-web</url>
-</scm>
+		<connection>scm:git:git://github.com/AnneWilliams/annerepo.git</connection>
+		<url>https://github.com/AnneWilliams/annerepo</url>
+	</scm>
 	
  
 
