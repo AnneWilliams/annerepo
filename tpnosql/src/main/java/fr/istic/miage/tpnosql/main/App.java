@@ -7,59 +7,50 @@ import java.util.List;
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
 import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
 
 import fr.istic.miage.tpnosql.domain.Address;
 import fr.istic.miage.tpnosql.domain.Person;
 
 /**
  * Hello world!
- *
+ * 
  */
-public class App 
-{
-	public static void main( String[] args ) throws UnknownHostException
+public class App {
+	public static void main(String[] args) throws UnknownHostException {
 
-	{
+		Morphia morphia = new Morphia();
+		Mongo mongo = new Mongo();
 
-	    Morphia morphia = new Morphia();   
-	    Mongo mongo= new Mongo();
+		morphia.map(Person.class).map(Address.class);
 
-	    morphia.map(Person.class).map(Address.class);
+		Datastore ds = morphia.createDatastore(mongo, "my_database");
 
-	    Datastore ds = morphia.createDatastore(mongo, "my_database");
+		Person p = new Person();
 
-	    //ds.ensureIndexes();
-	    //ds.ensureCaps();
-	   
+		p.setName("Anne");
 
-	    Person p = new Person();
-	    List<Address> addresses = new ArrayList<Address>();
+		Address address1 = new Address();
 
-	    p.setName("Tintin");
+		address1.setStreet("123 Some street");
 
-	    Address address = new Address();
+		address1.setCity("Some city");
 
-	    address.setStreet("123 Some street");
+		address1.setPostCode("123 456");
 
-	    address.setCity("Some city");
+		address1.setCountry("Some country");
 
-	    address.setPostCode("123 456");
+		// set address
 
-	    address.setCountry("Some country");
-	   
-	    addresses.add(address);
-	    //set address
+		p.addAddresses(address1);
 
-	    p.setAddresses(addresses);
+		// Save the POJO
 
-	    // Save the POJO
+		ds.save(address1);
+		ds.save(p);
 
-	    ds.save(p);
+		for (Person e : ds.find(Person.class))
 
-	    for (Person e : ds.find(Person.class))
-
-	         System.err.println(e);
+			System.err.println("hello: " + e);
 
 	}
 }

@@ -2,7 +2,7 @@ package fr.istic.miage.tpnosql.domain;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
-import com.mongodb.ObjectId;
+import org.bson.types.*;
 
 @Entity("address")
 public class Address {

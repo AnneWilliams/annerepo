@@ -6,11 +6,16 @@ import java.util.List;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
-import com.mongodb.ObjectId;
+import org.bson.types.*;
 
 @Entity("personnes")
 public class Person {
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", addresses="
+				+ addresses + "]";
+	}
 	@Id private ObjectId id;
 	private String name;
 	

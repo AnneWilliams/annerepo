@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
 import com.google.code.morphia.annotations.Reference;
-import com.mongodb.ObjectId;
+import org.bson.types.*;
 
 @Entity("articles")
 public class Article {
