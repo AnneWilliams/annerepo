@@ -22,7 +22,8 @@ public class person implements Serializable {
 	private Date date_naiss;
 	private String profil_fb;
 	private List<home> hom = new ArrayList<home>();
-	private List<person> personn = new ArrayList<person>();
+	private List<person> amis = new ArrayList<person>();
+	List<ElectronicDevice> electro = new ArrayList<ElectronicDevice>();
 
 	public person() {
 
@@ -36,7 +37,6 @@ public class person implements Serializable {
 		this.mail = mail;
 		this.date_naiss = date_naiss;
 		this.profil_fb = profil_fb;
-		
 
 	}
 
@@ -103,10 +103,27 @@ public class person implements Serializable {
 	public void setProfil_fb(String profil_fb) {
 		this.profil_fb = profil_fb;
 	}
-	
-	
 
-	@OneToMany (mappedBy="personn", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "personn", cascade = CascadeType.PERSIST)
+	public List<ElectronicDevice> getElectro() {
+		return electro;
+
+	}
+
+	public void setElectro(List<ElectronicDevice> electro) {
+		this.electro = electro;
+	}
+
+	@OneToMany
+	public List<person> getAmis() {
+		return amis;
+	}
+
+	public void setAmis(List<person> amis) {
+		this.amis = amis;
+	}
+
+	@OneToMany(mappedBy = "personn", cascade = CascadeType.PERSIST)
 	public List<home> getHom() {
 		return hom;
 
@@ -116,15 +133,12 @@ public class person implements Serializable {
 		this.hom = hom;
 	}
 
-	@OneToMany
-	public List<person> getPersonn() {
-		return personn;
+	@Override
+	public String toString() {
+		return "person [id=" + id + ", nom=" + nom + ", prenom=" + prenom
+				+ ", genre=" + genre + ", mail=" + mail + ", date_naiss="
+				+ date_naiss + ", profil_fb=" + profil_fb + ", hom=" + hom
+				+ ", amis=" + amis + ", electro=" + electro + "]";
 	}
-
-	public void setPersonn(List<person> personn) {
-		this.personn = personn;
-	}
-
-	
 
 }

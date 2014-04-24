@@ -7,23 +7,22 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class ElectronicDevice {
-	
-	
+
 	private long id;
 	private String marque;
 	private int price;
-	private home hom;
-	
+	private person personn;
+
 	public ElectronicDevice() {
-		
+
 	}
-	
-	public  ElectronicDevice (String marque, int price) {
-		this.marque=marque;
-		this.price=price;
+
+	public ElectronicDevice(String marque, int price) {
+		this.marque = marque;
+		this.price = price;
+
 	}
-	
-	
+
 	@Id
 	@GeneratedValue
 	public long getId() {
@@ -49,19 +48,14 @@ public class ElectronicDevice {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	
-	
+
 	@ManyToOne
-	public home getHom() {
-		return hom;
+	public person getPersonn() {
+		return personn;
 	}
 
-	public void setHom(home hom) {
-		this.hom = hom;
+	public void setPersonn(person personn) {
+		this.personn = personn;
 	}
 
-	
-
-	
-	
 }

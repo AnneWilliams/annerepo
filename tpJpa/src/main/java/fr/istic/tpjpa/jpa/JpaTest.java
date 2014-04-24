@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import fr.istic.tpjpa.domain.ElectronicDevice;
 import fr.istic.tpjpa.domain.heater;
@@ -34,118 +35,101 @@ public class JpaTest {
 		tx.begin();
 
 		// TODO create entity
-		person personne1=new person();
-		person personne2=new person();
-		person personne3=new person();
-		person personne4=new person();
-		
-		personne1.setNom("william");
-		personne1.setPrenom("anne");
-		personne1.setGenre("femme");
-		personne1.setMail("annewilliam@gmail.com");
-		personne1.setDate_naiss(null);
-		personne1.setProfil_fb("anne");
-		
-		personne2.setNom("sene");
-		personne2.setPrenom("abdoulaye");
-		personne2.setGenre("homme");
-		personne2.setMail("sene@gmail.com");
-		personne2.setDate_naiss(null);
-		personne2.setProfil_fb("sene");
-		
-		
-		personne3.setNom("ndiaye");
-		personne3.setPrenom("modou");
-		personne3.setGenre("homme");
-		personne3.setMail("modou@gmail.com");
-		personne3.setDate_naiss(null);
-		personne3.setProfil_fb("modou");
-		
-		personne4.setNom("pouye");
-		personne4.setPrenom("issa");
-		personne4.setGenre("homme");
-		personne4.setMail("pouye@gmail.com");
-		personne4.setDate_naiss(null);
-		personne4.setProfil_fb("issa");
-		
-		List<person> amis = new ArrayList<person>();
-		amis.add(personne2);
-		amis.add(personne3);
-		amis.add(personne4);
-		
-		personne1.setPersonn(amis);
-		
-		
-		
-		home maison1=new home();
-		maison1.setAdresse("beaulieu");
-		maison1.setSuperficie(9); 
-		maison1.setAdresse_ip("199.88.77.87");
-		
-		home maison2=new home();
-		maison2.setAdresse("dakar");
-		maison2.setSuperficie(200); 
-		maison2.setAdresse_ip("199.80.77.87");
-		
-		List<home> maisons = new ArrayList<home>();
-		maisons.add(maison1);
-		maisons.add(maison2);
-		
-		personne1.setHom(maisons);
-		
-		
-		ElectronicDevice electro1= new ElectronicDevice();
-		electro1.setMarque("samsung");
-		electro1.setPrice(1000);
-		
-		ElectronicDevice electro2= new ElectronicDevice();
-		electro2.setMarque("toshiba");
-		electro2.setPrice(2000);
-		
-		
-		List<ElectronicDevice> electronicdevices= new ArrayList<ElectronicDevice>();
-		electronicdevices.add(electro1);
-		electronicdevices.add(electro2);
-		
-		maison1.setElectronicdevices(electronicdevices);
-		
-		heater heater1= new heater();
-		heater1.setMarque("nokia");
-		heater1.setPrice(800);
-		
-		heater heater2= new heater();
-		heater2.setMarque("hp");
-		heater2.setPrice(500);
-		
-		List<heater> heaters= new ArrayList<heater>();
-		heaters.add(heater1);
-		heaters.add(heater2);
-		
-		maison1.setHeaters(heaters);
-		
-		
+		List<person> amis1 = new ArrayList<person>();
+		// amis1.add(personne2);
+
+		List<person> amis2 = new ArrayList<person>();
+		// amis2.add(personne1);
+
+		person personne1 = new person("william", "anne", "femme",
+				"annewilliam@gmail.com", null, "anne");
+		person personne2 = new person("sene", "abdoulaye", "homme",
+				"sene@gmail.com", null, "sene");
+
+		personne1.getAmis().add(personne2);
+
+		home maison1 = new home("beaulieu", 9, "199.88.77.87");
+		home maison2 = new home("dakar", 200, "199.80.77.87");
+
+		personne1.getHom().add(maison1);
+		personne1.getHom().add(maison2);
+		maison1.setPersonn(personne1);
+		maison2.setPersonn(personne1);
+
+		ElectronicDevice electro1 = new ElectronicDevice("samsung", 1000);
+		ElectronicDevice electro2 = new ElectronicDevice("toshiba", 2000);
+
+		personne1.getElectro().add(electro2);
+		electro2.setPersonn(personne1);
+
+		heater heater1 = new heater("nokia", 800);
+		heater heater2 = new heater("hp", 500);
+
+		// maison1.getHeaters().add(heater2);
+		// heater2.setHom(maison1);
+
 		// TODO persist entity
 
 		manager.persist(personne1);
-		
-		
-		personne1.setNom("annie");
-		tx.commit();
-		test.ajoutpersonne();
+		manager.persist(personne2);
+		manager.persist(maison1);
+		manager.persist(maison2);
+		manager.persist(electro1);
+		manager.persist(electro2);
+		manager.persist(heater1);
+		manager.persist(heater2);
 
-		// TODO run request
+		tx.commit();
 
 		System.out.println(".. done");
+
+		
+		test.listPerson();
+		test.listHome();
+		test.listHeater();
+		test.listElectronicDevice();
 	}
 
-	
-	private void ajoutpersonne() {
-		List<person> resultList = manager.createQuery("Select p From person p", person.class).getResultList();
-		System.out.println("num of person:" + resultList.size());
-		for (person next : resultList) {
-			System.out.println("next person: " + next);
-		}
+	// TODO run request
+	public void listPerson() {
 
-}
-	
+		List<person> resultList = manager.createQuery("select p from person p",
+				person.class).getResultList();
+		System.out.println("number of persons:" + resultList.size());
+		for (person next : resultList) {
+			System.out.println("next person: " + next.toString());
+		}
+	}
+
+	public void listHome() {
+
+		List<home> resultList = manager.createQuery("select h from home h",
+				home.class).getResultList();
+		System.out.println("number of homes:" + resultList.size());
+		for (home next : resultList) {
+			System.out.println("next home: " + next.toString());
+		}
+	}
+
+	public void listHeater() {
+
+		List<heater> resultList = manager.createQuery(
+				"select he from heater he", heater.class).getResultList();
+		System.out.println("number of heaters:" + resultList.size());
+		for (heater next : resultList) {
+			System.out.println("next heater: " + next.toString());
+		}
+	}
+
+	public void listElectronicDevice() {
+
+		List<ElectronicDevice> resultList = manager.createQuery(
+				"select e from ElectronicDevice e", ElectronicDevice.class)
+				.getResultList();
+		System.out.println("number of ElectronicDevices:" + resultList.size());
+		for (ElectronicDevice next : resultList) {
+			System.out.println("next ElectronicDevice: " + next.toString());
+		}
+	}
+
 }
