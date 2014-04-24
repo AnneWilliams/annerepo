@@ -1,0 +1,2 @@
+serviceClass: fr.istic.sir.exampleProf.client.GreetingService
+path: 7126805C0A2337060382373A1F2FD2D1.gwt.rpc
